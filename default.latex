@@ -21,6 +21,7 @@
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{fancyvrb}
+\usepackage{float}
 \usepackage[hyphens]{url} %To fix too long URL's in references
 \usepackage{hyperref} % Might cause errors
 \hypersetup{colorlinks=true,breaklinks=true,citecolor=blue}
@@ -38,29 +39,7 @@ $if(latex-dir-rtl)$
 $endif$
 $endif$
 %
-\documentclass[
-$if(fontsize)$
-  $fontsize$,
-$endif$
-$if(lang)$
-  $babel-lang$,
-$endif$
-$if(papersize)$
-  $papersize$paper,
-$endif$
-$if(beamer)$
-  ignorenonframetext,
-$if(handout)$
-  handout,
-$endif$
-$if(aspectratio)$
-  aspectratio=$aspectratio$,
-$endif$
-$endif$
-$for(classoption)$
-  $classoption$$sep$,
-$endfor$
-]{$documentclass$}
+
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
