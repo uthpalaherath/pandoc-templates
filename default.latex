@@ -26,8 +26,7 @@
 \usepackage{hyperref} % Might cause errors
 \hypersetup{colorlinks=true,breaklinks=true,citecolor=blue}
 \usepackage{cleveref}
-\usepackage{titlesec}
-\titlelabel{\thetitle.\,}
+\usepackage{secdot}
 \graphicspath{{./images/}}
 
 % Options for packages loaded elsewhere
