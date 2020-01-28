@@ -21,6 +21,7 @@
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{fancyvrb}
+\usepackage{cleveref}
 \usepackage{float}
 \usepackage[hyphens]{url} %To fix too long URL's in references
 \usepackage{hyperref} % Might cause errors
