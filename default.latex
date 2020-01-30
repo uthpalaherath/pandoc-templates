@@ -1,33 +1,6 @@
-%load custom packages
-\documentclass[11pt]{article}
-\usepackage[letterpaper, top=1in, bottom=1in, left=1in, right=1in]{geometry}
-\usepackage[utf8]{inputenc}
-\usepackage{natbib}
-\usepackage{graphicx,grffile}
-\usepackage{authblk}
-\usepackage{verbatim}
-\usepackage{spverbatim}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{bm}
-\usepackage{dirtree}
-\usepackage{longtable}
-\usepackage{booktabs}
-\usepackage{sectsty}
-\usepackage{subcaption}
-\usepackage{wrapfig}
-\usepackage{subcaption}
-\usepackage{soul}
-\usepackage{color}
-\usepackage{xcolor}
-\usepackage{fancyvrb}
-\usepackage{float}
-\usepackage[hyphens]{url} %To fix too long URL's in references
-\usepackage{hyperref} % Might cause errors
-\hypersetup{colorlinks=true,breaklinks=true,citecolor=blue}
-\usepackage{cleveref}
-\usepackage{secdot}
-\graphicspath{{./images/}}
+%%%%%%%%%%%%%%%%%%%%%
+%% Pandoc settings %%
+%%%%%%%%%%%%%%%%%%%%%
 
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
@@ -41,7 +14,31 @@ $if(latex-dir-rtl)$
 $endif$
 $endif$
 %
-
+\documentclass[
+$if(fontsize)$
+  $fontsize$,
+$else$
+  fontsize=11pt
+$endif$
+$if(lang)$
+  $babel-lang$,
+$endif$
+$if(papersize)$
+  $papersize$paper,
+$endif$
+$if(beamer)$
+  ignorenonframetext,
+$if(handout)$
+  handout,
+$endif$
+$if(aspectratio)$
+  aspectratio=$aspectratio$,
+$endif$
+$endif$
+$for(classoption)$
+  $classoption$$sep$,
+$endfor$
+]{$documentclass$}
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
@@ -90,7 +87,37 @@ $if(section-titles)$
 \AtBeginSubsection{
   \frame{\subsectionpage}
 }
+\usepackage{cleveref}
 $endif$
+$else$ %If not beamer
+%load custom packages
+\usepackage[letterpaper, top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{graphicx,grffile}
+\usepackage{authblk}
+\usepackage{verbatim}
+\usepackage{spverbatim}
+\usepackage{bm}
+\usepackage{dirtree}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{sectsty}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{soul}
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{float}
+\usepackage[hyphens]{url} %To fix too long URL's in references
+\usepackage{hyperref} % Might cause errors
+\hypersetup{colorlinks=true,breaklinks=true,citecolor=blue}
+\usepackage{cleveref}
+\usepackage{secdot}
+\graphicspath{{./images/}}
+
+
 $endif$
 $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
@@ -103,6 +130,7 @@ $endif$
 $if(linestretch)$
 \usepackage{setspace}
 $endif$
+\usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
@@ -203,6 +231,7 @@ $endif$
 $if(verbatim-in-note)$
 \usepackage{fancyvrb}
 $endif$
+\usepackage{xcolor}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
@@ -227,8 +256,8 @@ $if(colorlinks)$
   filecolor=$if(filecolor)$$filecolor$$else$Maroon$endif$,
   citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
   urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
-$else$
-  hidelinks,
+%$else$
+% hidelinks,
 $endif$
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -376,6 +405,8 @@ $if(csl-refs)$
   {\par}
 $endif$
 
+% Pandoc Front Matter %
+
 % Set fonts for sections
 %\sectionfont{\fontsize{12}{11}\selectfont}
 
@@ -394,9 +425,7 @@ $else$
 $endif$
 \subtitle{$subtitle$}
 $endif$
-$if(author)$
-\author{$for(author)$$author$$sep$ \and $endfor$}
-$endif$
+%\author{$for(author)$$author$$sep$ \and $endfor$}
 %\date{$date$}
 $if(beamer)$
 $if(institute)$
@@ -416,11 +445,20 @@ $endif$
 
 % Customized details
 \author[]{Uthpala Herath}
+
+$if(beamer)$
+\institute[]{\textit{Department of Physics and Astronomy,\protect\\ West Virginia University,\protect\\ Morgantown, WV 26505-6315, USA}}
+$else$
 \affil[]{\textit{Department of Physics and Astronomy,\protect\\ West Virginia University,\protect\\ Morgantown, WV 26505-6315, USA}}
+$endif$
 
 $if(date)$
   \date{$date$}
 $endif$  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% End of Pandoc settings %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 $if(has-frontmatter)$
