@@ -87,7 +87,6 @@ $if(section-titles)$
 \AtBeginSubsection{
   \frame{\subsectionpage}
 }
-\usepackage{cleveref}
 $endif$
 $else$ %If not beamer
 %load custom packages
@@ -447,7 +446,22 @@ $endif$
 \author[]{Uthpala Herath}
 
 $if(beamer)$
-\institute[]{\textit{Department of Physics and Astronomy,\protect\\ West Virginia University,\protect\\ Morgantown, WV 26505-6315, USA}}
+\institute[West Virginia University]{\textit{Department of Physics and Astronomy,\protect\\ West Virginia University,\protect\\ Morgantown, WV 26505-6315, USA}}
+
+%Footer details
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=.3cm]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshortinstitute\hfill\insertframenumber\,/\,\inserttotalframenumber
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}  
+%Remove Header
+\setbeamertemplate{headline}{}
+
 $else$
 \affil[]{\textit{Department of Physics and Astronomy,\protect\\ West Virginia University,\protect\\ Morgantown, WV 26505-6315, USA}}
 $endif$
@@ -530,6 +544,7 @@ $endif$
 $endif$
 $if(beamer)$
 \begin{frame}[allowframebreaks]{$biblio-title$}
+  \frametitle{References}
   \bibliographytrue
 $endif$
   \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
