@@ -109,9 +109,10 @@ $else$ %If not beamer
 \usepackage{color}
 \usepackage{fancyvrb}
 \usepackage{float}
+\usepackage{siunitx}
 \usepackage[hyphens]{url} %To fix too long URL's in references
 \usepackage{hyperref} % Might cause errors
-\hypersetup{colorlinks=true,breaklinks=true,citecolor=blue}
+\hypersetup{colorlinks=true,breaklinks=true,citecolor=blue,linkcolor=blue,anchorcolor=blue}
 \usepackage{secdot}
 \graphicspath{{./images/}}
 
@@ -484,6 +485,9 @@ $if(beamer)$
 }  
 %Remove Header
 \setbeamertemplate{headline}{}
+\setbeamerfont{caption}{size=\scriptsize}
+
+
 
 $else$
 \affil[]{\textit{Department of Physics and Astronomy,\protect\\ West Virginia University,\protect\\ Morgantown, WV 26505-6315, USA}}
