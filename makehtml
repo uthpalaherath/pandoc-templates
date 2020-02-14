@@ -1,0 +1,91 @@
+#!/usr/bin/env python
+
+''' Markdown to HTML converter for Jekyll web pages
+
+This script converts markdown files to html and then places them 
+inside the website /_posts directory along with the relevant 
+images directories.
+'''
+
+import io
+import frontmatter
+import os
+import argparse
+import subprocess
+import fileinput
+from datetime import datetime
+
+
+
+
+def make_html(args):
+    '''
+    Copies the markdown file to the _post directory with the 
+    relevant image directory and creates an html.
+    '''
+
+    # markdown file
+    file_dest_dir = args.dest+'_posts/'
+    cmd = 'cp '+args.infile+' '+file_dest_dir
+    out, err = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+
+    # file name without extension
+    mdfilename = (args.infile).split('.')[0] 
+
+    # copy image directory to root of website directory
+    img_folder_in = './images/'+mdfilename+'/'
+    img_folder_out = args.dest+'/images/'+mdfilename
+    cmd = 'cp -r '+img_folder_in+' '+img_folder_out
+    out, err = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+
+    # add the word references at the end of the file
+    file_name = file_dest_dir+args.infile
+    file = open(file_name,'a')
+    file.write('\n\n References: \n')
+    file.close()
+
+    # renaming the image directory path from images to /images
+    with fileinput.FileInput(file_name, inplace=True,) as file:
+        for line in file:
+            print(line.replace('images/', '/images/'), end='')
+    file.close()    
+
+    # rename abstract to subtitle
+    with io.open(file_name, 'r') as f:
+        post = frontmatter.load(f)
+        if post['abstract']:
+            post['subtitle'] = post['abstract'] 
+
+        # Save the file.
+        newfile = io.open(file_name, 'wb')
+        frontmatter.dump(post, newfile)
+        newfile.close() 
+
+    # file name with dashes
+    dashed_name = post['title'].replace(' ', '-')
+
+    # get date
+    date = datetime.today().strftime('%Y-%m-%d')
+
+    # converting md to html using pandoc
+    cmd = 'pandoc --filter pandoc-eqnos --filter pandoc-tablenos --filter pandoc-secnos --number-sections --standalone \
+           --mathjax -t html5 --filter pandoc-fignos --filter pandoc-citeproc --csl ~/Dropbox/pandoc-templates/naturephysics.csl \
+           -s '+file_name+' -o '+file_dest_dir+date+'-'+dashed_name+'.html'
+    out, err = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+    if out:
+        print(out.decode('utf-8'))
+    if err:
+        print(err.decode('utf-8'))        
+
+    #remove the md file
+    cmd = 'rm  '+file_dest_dir+'/*.md'
+    out, err = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='This script converts markdown files to html.')
+    parser.add_argument('infile',type=str,default=None,help='Input markdown file.')
+    parser.add_argument('-dest',type=str,default='/Users/uthpala/Dropbox/uthpalaherath.github.io/',help='root directory of website')
+    args = parser.parse_args()
+    make_html(args)

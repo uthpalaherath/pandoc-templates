@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#make beamer pdf from md
+pandoc -t beamer --template=default.latex --natbib --number-sections --filter pandoc-fignos --filter pandoc-eqnos --filter pandoc-tablenos --filter pandoc-secnos -s $1 -o ${1::-3}.tex
+
+pdflatex ${1::-3}.tex
+bibtex ${1::-3}.aux
+pdflatex ${1::-3}.tex
+pdflatex ${1::-3}.tex
+rm *.aux *.bbl *.log *.blg *.nav *.toc *.snm *.vrb

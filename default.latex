@@ -14,6 +14,7 @@ $if(latex-dir-rtl)$
 $endif$
 $endif$
 %
+
 \documentclass[
 $if(fontsize)$
   $fontsize$,
@@ -496,6 +497,7 @@ $endif$
 $if(date)$
   \date{$date$}
 $endif$  
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% End of Pandoc settings %%
