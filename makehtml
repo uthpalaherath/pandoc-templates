@@ -41,7 +41,7 @@ def make_html(args):
     # add the word references at the end of the file
     file_name = file_dest_dir+args.infile
     file = open(file_name,'a')
-    file.write('\n\n References: \n')
+    file.write('\n\n# References \n')
     file.close()
 
     # renaming the image directory path from images to /images
@@ -65,12 +65,21 @@ def make_html(args):
     dashed_name = post['title'].replace(' ', '-')
 
     # get date
-    date = datetime.today().strftime('%Y-%m-%d')
+    yaml_date = post['date']
+    if yaml_date:
+        date = yaml_date
+        post['date']=" "
+        # Save the file.
+        newfile = io.open(file_name, 'wb')
+        frontmatter.dump(post, newfile)
+        newfile.close() 
+    else:
+        date = datetime.today().strftime('%Y-%m-%d')
 
     # converting md to html using pandoc
-    cmd = 'pandoc --filter pandoc-eqnos --filter pandoc-tablenos --filter pandoc-secnos --number-sections --standalone \
+    cmd = 'pandoc --filter pandoc-eqnos --filter pandoc-tablenos --filter pandoc-secnos  --number-sections --standalone \
            --mathjax -t html5 --filter pandoc-fignos --filter pandoc-citeproc --csl ~/Dropbox/pandoc-templates/naturephysics.csl \
-           -s '+file_name+' -o '+file_dest_dir+date+'-'+dashed_name+'.html'
+           -s '+file_name+' -o '+file_dest_dir+str(date)+'-'+dashed_name+'.html'
     out, err = subprocess.Popen(cmd, shell=True, stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
     if out:
         print(out.decode('utf-8'))
@@ -86,6 +95,6 @@ def make_html(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='This script converts markdown files to html.')
     parser.add_argument('infile',type=str,default=None,help='Input markdown file.')
-    parser.add_argument('-dest',type=str,default='/Users/uthpala/Dropbox/uthpalaherath.github.io/',help='root directory of website')
+    parser.add_argument('-dest',type=str,default='/home/uthpala/Dropbox/uthpalaherath.github.io/',help='root directory of website')
     args = parser.parse_args()
     make_html(args)
