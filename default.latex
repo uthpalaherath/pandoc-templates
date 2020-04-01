@@ -2,7 +2,7 @@
 %% Pandoc settings %%
 %%%%%%%%%%%%%%%%%%%%%
 
-$% Modified by Uthpala Herath
+% Modified by Uthpala Herath
 
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
