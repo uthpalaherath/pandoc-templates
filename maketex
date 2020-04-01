@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-#make .tex file from .md
-#pandoc --natbib --filter pandoc-fignos --filter pandoc-eqnos --filter pandoc-tablenos --filter pandoc-secnos -f markdown-auto_identifiers --number-sections -s $1 -o $2 
-pandoc --natbib --filter pandoc-fignos --filter pandoc-eqnos --filter pandoc-tablenos --filter pandoc-secnos --number-sections -s $1 -o $2 
-

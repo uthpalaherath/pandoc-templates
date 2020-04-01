@@ -2,6 +2,8 @@
 %% Pandoc settings %%
 %%%%%%%%%%%%%%%%%%%%%
 
+$% Modified by Uthpala Herath
+
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
@@ -483,7 +485,7 @@ $if(beamer)$
     \usebeamerfont{title in head/foot}\insertshortinstitute\hfill\insertframenumber\,/\,\inserttotalframenumber
   \end{beamercolorbox}}%
   \vskip0pt%
-}  
+}
 %Remove Header
 \setbeamertemplate{headline}{}
 \setbeamerfont{caption}{size=\scriptsize}
@@ -496,7 +498,7 @@ $endif$
 
 $if(date)$
   \date{$date$}
-$endif$  
+$endif$
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
